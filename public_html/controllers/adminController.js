@@ -1,7 +1,16 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+angular.module("adminModule", ["ngRoute"])
+.config(function($routeProvider){
+    $routeProvider.when("/login", {
+        templateUrl: "views/adminLogin.html"
+    });
+    $routeProvider.when("/dashboard", {
+        templateUrl: "views/dashboard.html"
+    });
+    $routeProvider.when("createsBoardTraining", {
+        templateUrl: "views/boardTraining.html"
+    });
+    $routeProvider.otherwise({
+        templateUrl: "views/adminLogin.html"
+    });
+});
 
