@@ -1,4 +1,7 @@
 
+<style>
+    span.error { font-weight: bold; color: red;}
+</style>
 <html ng-app="urlSubscribed">
     <head>
         <title>ManagementGym2.0</title>
@@ -18,18 +21,17 @@
             </div>    
             <form name="login" novalidate><br>
                 <div class="col-xs-3 form-group">
-                    
                     <label>Username</label>
-                    <input type="text" name="username" class="form-control" ng-model="username" required />
+                    <input name="username" class="form-control" ng-model="username" required />
                     <span class="error" ng-show="login.username.$error.required">
-                        Inserisci username
+                        Inserire Username Valido
                     </span>
                 </div>
                 <div class="col-xs-3 form-group">
                     <label>Password</label><br>
                     <input type="password" name="password" class="form-control" ng-model="password" required />
                     <span class="error" ng-show="login.password.$error.required">
-                        Inserisci password
+                        Inserire la Password
                     </span>
                 </div>
                 <div class="col-xs-1 form-group">
@@ -48,35 +50,35 @@
                     <label>Username</label>
                     <input type="text" name="username" class="form-control" ng-model="subscribed.username" required/>
                     <span class="error" ng-show="subscribe.username.$error.required">
-                        Inserisci username
+                        Inserire Username Valido
                     </span>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
                     <input type="password" name="password" class="form-control" ng-model="subscribed.password" required/>
                     <span class="error" ng-show="subscribe.password.$error.required">
-                        Inserisci password
+                        Inserire la Password
                     </span>
                 </div>
                 <div class="form-group">
                     <label>mail</label>
                     <input type="text" name="mail" class="form-control" ng-model="subscribed.mail" required/>
                     <span class="error" ng-show="subscribe.mail.$error.required">
-                        Inserisci mail
+                        Inserire mail valida
                     </span>
                 </div>
                 <div class="form-group">
                     <label>Età</label>
                     <input type="text" name="age" class="form-control" ng-model="subscribed.age" required/>
                     <span class="error" ng-show="subscribe.age.$error.required">
-                        Inserisci la tua età
+                        Inserire l'età
                     </span>
                 </div>
                 <div class="form-group">
                     <label>Altezza</label>
                     <input type="text" name="height" class="form-control" ng-model="subscribed.height" required/>
                     <span class="error" ng-show="subscribe.height.$error.required">
-                        Inserisci la tua altezza
+                        Inserire l'altezza
                     </span>
                 </div>
             </form>
