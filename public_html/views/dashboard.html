@@ -1,16 +1,88 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<div ng-controller="adminCtrl">
+    <div class="alert alert-danger" ng-show="subscribers.error || board.error">
+        Problemi con la comunicazione con il server.
+        <a href="#/dashboard" class="alert-link">Ricarica la pagina</a>
+    </div>
+    <div ng-hide="subscribers.error || board.error">
+        
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                Seleziona durata<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <li role="presentation" ng-model="all" ng-click="selectDuration(all)"><a role="menuitem" tabindex="-1">Tutti</a></li>
+                <li role="separator" class="divider"></li>
+                <li role="presentation" ng-repeat="duration in subscribers | uniqueDuration" 
+                    ng-click="selectDuration(duration)" ng-model="duration"><a role="menuitem" tabindex="-1" >{{duration}}</a></li>
+            </ul>
+        </div>
+        
+        <table class="table table-striped">
+            <tr><th>Username</th><th>Dettagli di un abbonato</th><th>Elimina un abbonato</th><th>
+            <tr ng-repeat="s in subscribers | orderBy:'username' | subscriptionDuration:durationSelected ">
+                <td>{{s.username}}</td>
+                <td>
+                    <button ng-click="selectUser(s)" class="btn btn-xs btn-primary">
+                        Dettagli
+                    </button>
+                </td>
+                <td>
+                    <button ng-click="deleteUser(s)" class="btn btn-xs btn-danger">
+                        Elimina
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <!-- Details -->
+        <div ng-show="userSelected">
+            <h3>Dettagli di {{userSelected.username}}</h3>
+            <div class="form-group">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>Username</td>
+                        <td><input type="text" class="form-control" ng-model="userSelected.username" ng-change="button=true" ></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="text" class="form-control" ng-model="userSelected.email" ng-change="button=true"></td>
+                    </tr>
+                    <tr>
+                        <td>Peso</td>
+                        <td><input type="text" class="form-control" ng-model="userSelected.peso" ng-change="button=true"></td>
+                    </tr>
+                    <tr>
+                        <td>Altezza</td>
+                        <td><input type="text" class="form-control" ng-model="userSelected.altezza" ng-change="button=true"></td>
+                    </tr>
+                    <tr>
+                        <td>Scheda di allenamento</td>
+                        <td>
+                            <ol ng-repeat="b in board">
+                                <input type="radio" name="radio" ng-model="board" 
+                                       ng-checked="b.nome === userSelected.scheda.nome"
+                                       ng-click="showButton()"/>{{b.nome}}
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Subscriptions</td>
+                        <td>
+                            <ol class="list-group">
+                                <li class="list-group-item" ng-repeat="a in userSelected.abbonamenti">
+                                    Abbonamento di {{a.durata}} giorni, al costo di {{a.prezzo}} €, attivato il 
+                                    {{a.data.toString()}}
+                                </li>
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button type="button" class="btn btn-success" ng-model="button" ng-disabled="!button" ng-click="update()">Salva</button></td>
+                    </tr>
+                </table>
+            </div>
+            
+            
+        </div>
+    </div>    
+</div>
