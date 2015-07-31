@@ -4,4 +4,15 @@
  * and open the template in the editor.
  */
 
-angular.module("urlSubscribed", []);
+angular.module("urlSubscribed", ["ngRoute"])
+.config(function($routeProvider){
+    $routeProvider.when("/subscribed.html", {
+        templateUrl: "views/subscribed.html"
+    });
+    $routeProvider.otherwise({
+        templateUrl: "index.html"
+    });
+    
+    
+    
+});
