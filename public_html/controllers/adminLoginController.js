@@ -1,7 +1,20 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/* global angular */
 
-
+angular.module("adminModule")
+.constant("adminLoginUrl", "http://localhost:5500/amministratore/login")
+.controller("loginCtrl", function($scope, $http, adminLoginUrl, $location){
+     
+    $scope.logIn = function(user, pass){
+        $http.post(adminLoginUrl, {
+            username: user,
+            password: pass
+        }, {
+            withCredentials: true
+        }).success(function (data) {
+            $location.path("/dashboard");
+        }).error(function (error) {
+            $scope.authenticationError = error;
+        });
+    }; 
+        
+});
