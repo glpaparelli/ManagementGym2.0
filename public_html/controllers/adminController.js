@@ -6,7 +6,7 @@ angular.module("adminModule", ["ngRoute"])
     $routeProvider.when("/dashboard", {
         templateUrl: "views/dashboard.html"
     });
-    $routeProvider.when("createsBoardTraining", {
+    $routeProvider.when("/createsBoardTraining", {
         templateUrl: "views/boardTraining.html"
     });
     $routeProvider.otherwise({
