@@ -74,9 +74,9 @@
                             <td>Scheda di allenamento</td>
                             <td>
                                 <ol ng-repeat="b in board">
-                                    <input type="radio" name="radio" ng-model="board" 
+                                    <input type="radio" name="radio" ng-model="brd" 
                                            ng-checked="b.nome === subscriberSelected.scheda.nome"
-                                           ng-click="showButton()" required/>{{b.nome}}
+                                           ng-click="selectBoard(b.nome)"/>{{b.nome}}
                                 </ol>
                             </td>
                         </tr>

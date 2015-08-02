@@ -22,11 +22,17 @@ and open the template in the editor.
         <script src="controllers/boardTrainingController.js" type="text/javascript"></script>
         <script src="filters/customFilter.js" type="text/javascript"></script>
     </head>
-    <body ng-controller="adminCtrl">
+    <body ng-controller="secondoCtrl">
         <nav class="navbar navbar-default">
             <a class="navbar-brand" href="#">Management Gym 2.0</a>
+            <div class="navbar-brand navbar-right">
+                <button type="button" class="btn btn-xs btn-primary" ng-show="location.path() == '/createsBoardTraining'" ng-click="changeToDashboard()">Gestisci abbonati</button>
+                <button type="button" class="btn btn-xs btn-primary" ng-show="location.path() == '/dashboard'" ng-click="changeToBoard()">Gestisci schede</button>
+                <button type="button" class="btn btn-xs btn-danger" 
+                        ng-show="location.path() == '/dashboard' || location.path() == '/createsBoardTraining'" 
+                        ng-click="logout()">Logout</button>
+            </div>
         </nav>
-        
         <ng-view/>
     </body>
 </html>

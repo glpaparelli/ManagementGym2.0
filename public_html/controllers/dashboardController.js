@@ -64,13 +64,27 @@ angular.module("adminModule")
         }
     };
     
+    $scope.selectBoard = function(board){
+        angular.forEach($scope.board, function(value, key){
+            if(value.nome == board){
+                $scope.boardSelected = value;
+            }
+        });
+        $scope.showButton();
+    };
+    
     $scope.update = function(){
         var url = subscribersUrl + "/" + $scope.subscriberSelected.id;
+        
+        if($scope.boardSelected){
+            $scope.subscriberSelected.scheda = $scope.boardSelected;
+        }
         
         $http.put(url, $scope.subscriberSelected)
         .success(function(data){
             $scope.subscriberSelected = data;
             $scope.subscriberSelected = null;
+            $scope.button = false;
         }).error(function(error){
             $scope.subscribers.errorUpdate = error;
         });
