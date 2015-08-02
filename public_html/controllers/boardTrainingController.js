@@ -1,6 +1,6 @@
 angular.module("adminModule")
 .constant("boardUrl", "http://localhost:5500/scheda")
-.controller("boardCtrl", function($scope, $http, $location, userUrl, boardUrl){
+.controller("boardCtrl", function($scope, $http, $location, boardUrl){
     
     $http.get(boardUrl)
     .success(function(data){
@@ -10,20 +10,38 @@ angular.module("adminModule")
     });
     
     $scope.uniqueNome = function(nome){
-        var exit = false;
-        for(var i=0; ((i<$scope.board.length) && (exit==false));i++){
-            if(nome == $scope.board[i].nome){
-                $scope.createBoard.nome.$setValidity("unique", false);
-                exit = true;
-            }else{
-                $scope.createBoard.nome.$setValidity("unique", true);
+        if(!$scope.boardSelected.id){
+            console.log("Nuovo");
+            var exit = false;
+            for(var i=0; ((i<$scope.board.length) && (exit==false));i++){
+                if(nome == $scope.board[i].nome){
+                    console.log("C'è già");
+                    $scope.createBoard.nome.$setValidity("unique", false);
+                    exit = true;
+                }else{
+                    console.log("Non c'è");
+                    $scope.createBoard.nome.$setValidity("unique", true);
+                }
             }
+        }else{
+            console.log("Modifica");
+            var exit = false;
+            for(var i=0; ((i<$scope.board.length) && (exit==false)); i++){
+                if($scope.board[i].id != $scope.boardSelected.id){
+                    if(nome == $scope.board[i].nome){
+                        $scope.createBoard.nome.$setValidity("unique", false);
+                        exit = true;
+                    }else{
+                        $scope.createBoard.nome.$setValidity("unique", true);
+                    }
+                }
+            };
         }
+        
     };
     
     $scope.selectBoard = function(board){
         $scope.boardSelected = board;
-        $scope.showModifiedBoard = true;
     };
     
     $scope.deleteBoard = function(board){
@@ -38,7 +56,6 @@ angular.module("adminModule")
         $http.delete(url, board)
         .success(function(){
             $scope.board.splice(index, 1);
-            $scope.uniqueNome(board.nome);
         }).error(function(error){
             $scope.board.errorDetele = error;
         });
@@ -46,43 +63,34 @@ angular.module("adminModule")
     };
     
     $scope.newBoard = function(name, description){
+        if(!$scope.boardSelected){
+            $scope.boardSelected = {
+                nome:name, 
+                descrizione:description
+            };
+        }
         
-        var board = {
-            nome : name,
-            descrizione : description
-        };
-        
-        $http.post(boardUrl, board)
-        .success(function(data){
-            $scope.board.push(data);
-            $scope.emptyForm();
-        }).error(function(error){
-            $scope.board.createBoardError = error;
-        });
-        $scope.showCreateBoard = false;
-    };
-    
-    $scope.modified = function(){
-        var url = boardUrl + "/" + $scope.boardSelected.id;
-        
-        $http.put(url, $scope.boardSelected)
-        .success(function(data){
-            angular.forEach($scope.board, function(value, key){
-                if(value.id == $scope.boardSelected.id){
-                    value = $scope.boardSelected;
-                }
+        if(!$scope.boardSelected.id){
+            $http.post(boardUrl, $scope.boardSelected)
+            .success(function(data){
+                $scope.board.push(data);
+                $scope.boardSelected = null;
+            }).error(function(error){
+                $scope.board.errorCreate = error;
             });
-            $scope.boardSelected = null;
-            $scope.showModifiedBoard = false;
-        }).error(function(error){
-            $scope.board.errorModified = error;
-        });
+        }else{
+            var url = boardUrl + "/" + $scope.boardSelected.id;
+            $http.put(url, $scope.boardSelected)
+            .success(function(data){
+                $scope.boardSelected = data;
+                $scope.boardSelected = null;
+            }).error(function(error){
+                $scope.board.errorModified = error;
+            });
+        }
+        
         
     };
-    
-    $scope.uniqueNomeModified = function(){
         
-    };
-    
 });
 

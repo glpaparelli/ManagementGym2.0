@@ -5,7 +5,7 @@
 </style>
 
 <div ng-controller="boardCtrl">
-    <div class="alert alert-danger" ng-show="board.error || board.errorDetele || board.createBoardError">
+    <div class="alert alert-danger" ng-show="board.error || board.errorDetele || board.errorCreate || board.errorModified">
         Problemi con la comunicazione con il server.
         <a href="#/createsBoardTraining" class="alert-link">Ricarica la pagina</a>
     </div>
@@ -27,49 +27,25 @@
                 </td>
             </tr>
         </table>
-        <button ng-hide="showCreateBoard" type="button" class="btn btn-md btn-primary" ng-click="showCreateBoard = true">Crea nuova scheda</button>
-        
-        <div ng-show="showCreateBoard" ng-hide="!showCreateBoard">
-            <form name="createBoard" novalidate>
-                <div class="well">
-                    <div class="form-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" class="form-control" name="nome" ng-change="uniqueNome(nome)" ng-model="nome" required>
-                        <span class="error" ng-show="createBoard.nome.$error.required">Inserisci il nome</span>
-                        <span class="error" ng-show="createBoard.nome.$error.unique">Nome già utilizzato</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="descrizione">Description</label>
-                        <textarea class="form-control" rows="5" name="descrizione" ng-model="descrizione"  required></textarea>
-                        <span class="error" ng-show="createBoard.descrizione.$error.required">Inserisci la descrizione</span>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary" ng-click="newBoard(nome, descrizione)" ng-disabled="createBoard.$invalid" >Crea</button>
-                    </div>
+                
+        <form name="createBoard" novalidate>
+            <div class="well">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" name="nome" ng-change="uniqueNome(boardSelected.nome)" ng-model="boardSelected.nome" required>
+                    <span class="error" ng-show="createBoard.nome.$error.required">Inserisci il nome</span>
+                    <span class="error" ng-show="createBoard.nome.$error.unique">Nome già utilizzato</span>
                 </div>
-            </form>
-        </div>
-        
-        <div ng-show="showModifiedBoard" ng-hide="!showModifiedBoard">
-            <form name="modifiedBoard">
-                <div class="well">
-                    <div class="form-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" class="form-control" name="nome" ng-change="uniqueNomeModified()" ng-model="boardSelected.nome" required>
-                        <span class="error" ng-show="modifiedBoard.nome.$error.required">Inserisci il nome</span>
-                        <span class="error" ng-show="modifiedBoard.nome.$error.unique">Nome già utilizzato</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="descrizione">Description</label>
-                        <textarea class="form-control" rows="5" name="descrizione" ng-model="boardSelected.descrizione"  required></textarea>
-                        <span class="error" ng-show="modifiedBoard.descrizione.$error.required">Inserisci la descrizione</span>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary" ng-click="modified()" ng-disabled="modifiedBoard.$invalid" >Modifica</button>
-                    </div>
+                <div class="form-group">
+                    <label for="descrizione">Description</label>
+                    <textarea class="form-control" rows="5" name="descrizione" ng-model="boardSelected.descrizione"  required></textarea>
+                    <span class="error" ng-show="createBoard.descrizione.$error.required">Inserisci la descrizione</span>
                 </div>
-            </form>
-        </div>
+                <div>
+                    <button class="btn btn-xs btn-primary" ng-click="newBoard(boardSelected.nome, boardSelected.descrizione)" ng-disabled="createBoard.$invalid" >Crea/modifica</button>
+                </div>
+            </div>
+        </form>
         
     </div>
 </div>
