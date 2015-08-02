@@ -9,8 +9,9 @@
         </group>
         <group name="Progetti NetBeans">
             <file>file:/C:/Users/giulio/OneDrive/Progetti%20NetBeans/ManagementGym2.0/public_html/controllers/urlSubscribed.js</file>
+            <file>file:/C:/Users/giulio/OneDrive/Progetti%20NetBeans/ManagementGym2.0/public_html/controllers/subscribedController.js</file>
+            <file>file:/C:/Users/giulio/OneDrive/Progetti%20NetBeans/ManagementGym2.0/public_html/views/subscribed.html</file>
             <file>file:/C:/Users/giulio/OneDrive/Progetti%20NetBeans/ManagementGym2.0/public_html/controllers/subscribeController.js</file>
-            <file>file:/C:/Users/giulio/OneDrive/Progetti%20NetBeans/ManagementGym2.0/public_html/controllers/loginController.js</file>
             <file>file:/C:/Users/giulio/OneDrive/Progetti%20NetBeans/ManagementGym2.0/public_html/index.html</file>
         </group>
     </open-files>

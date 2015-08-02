@@ -10,15 +10,19 @@ angular.module("urlSubscribed")
 .controller("loginCtrl", function($scope, $http, userLoginUrl, $location){
     
     $scope.logIn = function(){
+        
         $http.post(userLoginUrl, {
             username: $scope.login.username,
             password: $scope.login.password
         }, {
             withCredentials: true
         }).success(function (data) {
-            $location.path("/subscribed.html");
+            window.location = "views/subscribed.html";
+            
         }).error(function (error) {
-            $scope.error = error;
+            
+            $scope.error.authError = error;
+            
         });
     }; 
    
