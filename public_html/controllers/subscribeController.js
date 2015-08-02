@@ -4,30 +4,30 @@
  * and open the template in the editor.
  */
 
-angular.module("urlSubscribed")
-.constant("userUrl", "http://localhost:5500/abbonato/login")
-.controller("subscribeCtrl", function($scope, $http, userUrl, $location){
+/* global angular */
+
+angular.module("urlSubscribe")
+.constant("userSubUrl", "http://localhost:5500/abbonato")
+.controller("subscribeCtrl", function($scope, $http, userSubUrl, $location){
      
     $scope.subscription = function(){
         console.log("ehi!");
-        var sub = {
-            username:$scope.subscribe.username,
-            password:$scope.subscribe.password,
-            age:$scope.subscribe.age,
-            mail: $scope.subscribe.mail,
-            weight:$scope.subscribe.weight,
-            height:$scope.subscribe.height
+        var newSub = {
+            username:$scope.subscribed.username,
+            password:$scope.subscribed.password,
+            eta:$scope.subscribed.age,
+            mail: $scope.subscribed.mail,
+            peso:$scope.subscribed.weight,
+            altezza:$scope.subscribed.height
         };
                 
-        $http.post(userUrl, sub).
+        $http.post(userSubUrl, newSub).
         success(function(data) {
             console.log("Si");
-            $location.path("/subscribed.html");
+            window.location = "views/subscribed.html";
         }).
         error(function(error) {
             $scope.error = error;
         });
     };
-    
-    
 });

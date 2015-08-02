@@ -11,8 +11,5 @@ angular.module("urlSubscribed", ["ngRoute"])
     });
     $routeProvider.otherwise({
         templateUrl: "index.html"
-    });
-    
-    
-    
+    }); 
 });
