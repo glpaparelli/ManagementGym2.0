@@ -1,16 +1,51 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<style>
+    .ng-invalid { background-color: lightpink; }
+    .ng-valid { background-color: lightgreen; }
+    span.error { color: red; font-weight: bold; }
+</style>
+
+<div ng-controller="boardCtrl">
+    <div class="alert alert-danger" ng-show="board.error || board.errorDetele || board.errorCreate || board.errorModified">
+        Problemi con la comunicazione con il server.
+        <a href="#/createsBoardTraining" class="alert-link">Ricarica la pagina</a>
+    </div>
+    <div ng-hide="board.error">
+        <table class="table table-striped">
+            <tr><th>Nome</th><th>Descrizione</th><th>Modifica scheda</th><th>Elimina scheda</th><th>
+            <tr ng-repeat="b in board | orderBy:'nome'">
+                <td>{{b.nome}}</td>
+                <td>{{b.descrizione}}</td>
+                <td>
+                    <button ng-click="selectBoard(b)" class="btn btn-xs btn-primary">
+                        Modifica
+                    </button>
+                </td>
+                <td>
+                    <button ng-click="deleteBoard(b)" class="btn btn-xs btn-danger">
+                        Elimina
+                    </button>
+                </td>
+            </tr>
+        </table>
+                
+        <form name="createBoard" novalidate>
+            <div class="well">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" name="nome" ng-change="uniqueNome(boardSelected.nome)" ng-model="boardSelected.nome" required>
+                    <span class="error" ng-show="createBoard.nome.$error.required">Inserisci il nome</span>
+                    <span class="error" ng-show="createBoard.nome.$error.unique">Nome già utilizzato</span>
+                </div>
+                <div class="form-group">
+                    <label for="descrizione">Description</label>
+                    <textarea class="form-control" rows="5" name="descrizione" ng-model="boardSelected.descrizione"  required></textarea>
+                    <span class="error" ng-show="createBoard.descrizione.$error.required">Inserisci la descrizione</span>
+                </div>
+                <div>
+                    <button class="btn btn-xs btn-primary" ng-click="newBoard(boardSelected.nome, boardSelected.descrizione)" ng-disabled="createBoard.$invalid" >Crea/modifica</button>
+                </div>
+            </div>
+        </form>
+        
+    </div>
+</div>

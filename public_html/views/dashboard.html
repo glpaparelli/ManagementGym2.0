@@ -1,16 +1,103 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<style>
+    span.error { color: red; font-weight: bold; }
+</style>
+<div ng-controller="adminCtrl">
+    <div class="alert alert-danger" ng-show="subscribers.error || board.error || subscribers.errorDetele || subscribers.errorUpdate">
+        Problemi con la comunicazione con il server.
+        <a href="#/dashboard" class="alert-link">Ricarica la pagina</a>
+    </div>
+    <div ng-hide="subscribers.error || board.error">
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                Seleziona durata<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <li role="presentation" ng-model="all" ng-click="selectDuration(all)"><a role="menuitem" tabindex="-1">Tutti</a></li>
+                <li role="separator" class="divider"></li>
+                <li role="presentation" ng-repeat="duration in subscribers | uniqueDuration" 
+                    ng-click="selectDuration(duration)" ng-model="duration"><a role="menuitem" tabindex="-1" >{{duration}}</a></li>
+            </ul>
+        </div>
+        
+        <table class="table table-striped">
+            <tr><th>Username</th><th>Dettagli di un abbonato</th><th>Elimina un abbonato</th><th>
+            <tr ng-repeat="s in subscribers | orderBy:'username' | subscriptionDuration:durationSelected ">
+                <td>{{s.username}}</td>
+                <td>
+                    <button ng-click="selectSubscriber(s)" class="btn btn-xs btn-primary">
+                        Dettagli
+                    </button>
+                </td>
+                <td>
+                    <button ng-click="deleteSubscriber(s)" class="btn btn-xs btn-danger">
+                        Elimina
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <!-- Details -->
+        <div ng-show="subscriberSelected" ng-hide="!subscriberSelected">
+            <h3>Dettagli di {{subscriberSelected.username}}</h3>
+            <div class="form-group">
+                <form name="modifiedFields" novalidate>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>Username</td>
+                            <td>
+                                <input type="text" name="nome" class="form-control" ng-model="subscriberSelected.username" ng-change="uniqueUsername()" required>
+                                <span class="error" ng-show="modifiedFields.nome.$error.required">Inserisci username</span>
+                                <span class="error" ng-show="modifiedFields.nome.$error.unique">Username già utilizzato</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>
+                                <input type="email" name="email" class="form-control" ng-model="subscriberSelected.email" ng-change="showButton()" required >
+                                <span class="error" ng-show="modifiedFields.email.$error.required">Inserisci email</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Peso</td>
+                            <td>
+                                <input type="text" name="peso" class="form-control" ng-model="subscriberSelected.peso" ng-change="showButton()" required>
+                                <span class="error" ng-show="modifiedFields.peso.$error.required">Inserisci peso</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Altezza</td>
+                            <td>
+                                <input type="text" name="altezza" class="form-control" ng-model="subscriberSelected.altezza" ng-change="showButton()" required>
+                                <span class="error" ng-show="modifiedFields.altezza.$error.required">Inserisci altezza</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Scheda di allenamento</td>
+                            <td>
+                                <ol ng-repeat="b in board">
+                                    <input type="radio" name="radio" ng-model="board" 
+                                           ng-checked="b.nome === subscriberSelected.scheda.nome"
+                                           ng-click="showButton()" required/>{{b.nome}}
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Subscriptions</td>
+                            <td>
+                                <ol class="list-group">
+                                    <li class="list-group-item" ng-repeat="a in subscriberSelected.abbonamenti">
+                                        Abbonamento di {{a.durata}} giorni, al costo di {{a.prezzo}} €, attivato il 
+                                        {{a.data.toString()}}
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><button type="button" class="btn btn-success" ng-model="button" ng-disabled="!button || modifiedFields.$invalid" ng-click="update()">Salva</button></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>
