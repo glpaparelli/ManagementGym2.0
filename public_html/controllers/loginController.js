@@ -5,7 +5,7 @@
  */
 /* global angular */
 
-angular.module("urlSubscribed")
+angular.module("subModule")
 .constant("userLoginUrl", "http://localhost:5500/abbonato/login")
 .controller("loginCtrl", function($scope, $http, userLoginUrl, $location){
     
@@ -20,8 +20,7 @@ angular.module("urlSubscribed")
             window.location = "views/subscribed.html";
             
         }).error(function (error) {
-            
-            $scope.error.authError = error;
+            $scope.error= error;
             
         });
     }; 

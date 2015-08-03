@@ -6,7 +6,7 @@
 
 /* global angular */
 
-angular.module("urlSubscribe")
+angular.module("subModule")
 .constant("userSubUrl", "http://localhost:5500/abbonato")
 .controller("subscribeCtrl", function($scope, $http, userSubUrl, $location){
      

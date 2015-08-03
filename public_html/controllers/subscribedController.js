@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-angular.module("urlSubscribed")
+angular.module("subModule")
 .factory('getData', getData)
 .constant("userUrlMe", "http://localhost:5500/abbonato/me")
 .constant("userUrl", "http://localhost:5500/abbonato")
