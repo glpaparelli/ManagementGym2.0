@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+/* global angular */
+
 angular.module("subModule", ["ngRoute"])
 .config(function($routeProvider){
     $routeProvider.when("/subscribed.html", {

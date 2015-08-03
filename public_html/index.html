@@ -26,7 +26,7 @@
                 <form name="login" novalidate ng-controller="loginCtrl"><br>
                     <div class="col-xs-3 form-group">
                         <label>Username</label>
-                        <input name="username" class="form-control" ng-model="login.username" required />
+                        <input name="username"  class="form-control" ng-model="login.username" required />
                         <span class="error" ng-show="login.username.$error.required">
                             Inserire Username Valido
                         </span>
@@ -56,10 +56,9 @@
                 <h4>Nuovo Utente? Iscriviti!</h4>
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" name="username" class="form-control" ng-model="subscribed.username" required/>
-                    <span class="error" ng-show="subscribe.username.$error.required">
-                        Inserire l' Username 
-                    </span>
+                    <input type="text" name="username" class="form-control" ng-model="subscribed.username" ng-change="mostra()" required/>
+                    <span class="error" ng-show="subscribe.username.$error.required">Inserire l' Username </span>
+                    <spam class="error" ng-show="subscribe.username.$error.unique">Username già usato</spam>
                 </div>
                 <div class="form-group">
                     <label>Password</label>

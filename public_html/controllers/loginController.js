@@ -20,8 +20,7 @@ angular.module("subModule")
             window.location = "views/subscribed.html";
             
         }).error(function (error) {
-            $scope.error= error;
-            
+            $scope.authError= error;
         });
     }; 
    
